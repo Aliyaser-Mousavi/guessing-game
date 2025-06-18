@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+</head>
+<body>
+    <div class="container">
+
+        <header class="head">
+            <button class="btn again">Again!</button>
+            <p>( Between 1 and 20 )</p>
+        </header>
+
+        <div class="title">
+            <h1>Guess My Number!</h1>
+            <input type="text" class="randomNumber" value="">
+            <hr>
+        </div>
+
+        <div class="content">
+            <input class="userGuess" type="text">
+            <button class="btn check">check</button>
+            <p class="result"></p>
+            <p>Score: <span class="score"></span></p>
+            <p>Highscore: <span class="highScore"></span></p>
+        </div>
+
+    </div>
+</body>
+</html>
+<script>
+
+var userGuess= document.querySelector(".userGuess");
+document.querySelector(".randomNumber").value= "?";
+var result= document.querySelector(".result");
+result.textContent= "🤔 Guess Starting...";
+
+var Score= document.querySelector(".score");
+
+let highScore= document.querySelector(".highScore");
+
+
+Score.textContent= 20;
+let secretNumber= Math.floor(Math.random()*20)+1;
+
+document.querySelector(".check").addEventListener('click', function(){
+
+
+        // empty value
+    if(userGuess.value===""){
+        result.textContent= "🧨 No Number";
+
+        // correct guess number.
+    } else if(userGuess.value==secretNumber){
+        result.textContent= "🥳 Correct Number";
+        document.querySelector("body").style.backgroundColor= "green";
+        document.querySelector(".randomNumber").value= secretNumber;
+
+        highScore.textContent= 0;
+        if(highScore.textContent < Score.textContent){
+        highScore.textContent = Score.textContent;
+    }
+
+        // low and high guess number.
+    }else if(userGuess.value!==secretNumber){
+        result.textContent= userGuess.value > secretNumber ? "📈 High Number": "📉 Low Number";
+        document.querySelector("body").style.backgroundColor= "black";
+        Score.textContent--;
+
+        // lost the game.
+        if(Score.textContent < 1){
+            result.textContent= "😱 You lost the game";
+            Score.textContent= "0";
+        }
+    }
+});
+
+ // reload the page. (refresh)
+ 
+document.querySelector(".again").addEventListener('click', function(){
+
+    Score.textContent= 20;
+    userGuess.value= "";
+    document.querySelector(".randomNumber").value= "?";
+    document.querySelector("body").style.backgroundColor= "black";
+    secretNumber= Math.floor(Math.random()*20)+1;
+    result.textContent= "🤔 Guess Starting...";
+    console.log(secretNumber);
+});
+
+
+</script>
